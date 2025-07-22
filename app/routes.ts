@@ -6,6 +6,7 @@ export default [
     layout("routes/main/protected-layout.tsx", [
       route("dashboard", "routes/main/dashboard.tsx"),
       route("profile", "routes/main/profile.tsx"),
+      ...prefix("posts", [index("routes/posts/posts.tsx"), route("new", "routes/posts/new-post.tsx")]),
     ]),
   ]),
 
