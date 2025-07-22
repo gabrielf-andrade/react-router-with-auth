@@ -1,14 +1,19 @@
 import { Outlet } from "react-router";
+import NavBar from "~/components/layout/navbar";
+import { getSession } from "~/lib/session.server";
 import type { Route } from "./+types/main-layout";
 
-export function loader({}: Route.LoaderArgs) {
-  return null;
+export async function loader({ request }: Route.LoaderArgs) {
+  const session = await getSession(request.headers.get("Cookie"));
+  const user = session.get("user");
+
+  return { user: user || null };
 }
 
-export default function MainLayout() {
+export default function MainLayout({ loaderData }: Route.ComponentProps) {
   return (
     <div>
-      MainLayout
+      <NavBar user={loaderData.user} />
       <Outlet />
     </div>
   );

@@ -6,5 +6,9 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-  return <Button>Click me</Button>;
+  return (
+    <div className="flex gap-4 items-center justify-center mt-24">
+      Home <Button>Click me</Button>
+    </div>
+  );
 }
