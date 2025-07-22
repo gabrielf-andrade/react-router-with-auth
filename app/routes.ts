@@ -12,4 +12,5 @@ export default [
     route("dashboard", "routes/main/dashboard.tsx"),
     route("profile", "routes/main/profile.tsx"),
   ]),
+  route("/.well-known/appspecific/com.chrome.devtools.json", "routes/[com.chrome.devtools.json].tsx"),
 ] satisfies RouteConfig;
