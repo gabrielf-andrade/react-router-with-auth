@@ -1,4 +1,4 @@
-import { createCookieSessionStorage } from "react-router";
+import { createCookieSessionStorage, redirect } from "react-router";
 
 export interface SessionData {
   user: {
@@ -11,6 +11,7 @@ export interface SessionData {
 
 type SessionFlashData = {
   error: string;
+  success: string;
 };
 
 const { getSession, commitSession, destroySession } = createCookieSessionStorage<SessionData, SessionFlashData>({
@@ -26,3 +27,16 @@ const { getSession, commitSession, destroySession } = createCookieSessionStorage
 });
 
 export { commitSession, destroySession, getSession };
+
+export async function requireUserSession(request: Request) {
+  const session = await getSession(request.headers.get("Cookie"));
+  if (!session.has("user")) {
+    session.flash("error", "You must be logged in to access this page.");
+    throw redirect("/auth/signin", {
+      headers: {
+        "Set-Cookie": await commitSession(session),
+      },
+    });
+  }
+  return session;
+}
