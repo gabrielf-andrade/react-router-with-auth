@@ -24,7 +24,7 @@ export default function SignInForm() {
         <CardTitle className="text-2xl text-center">Sign In</CardTitle>
       </CardHeader>
       <CardContent>
-        <form method="post" action="/auth/signin">
+        <fetcher.Form method="post" action="/auth/signin">
           <div className="flex flex-col gap-4">
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
@@ -69,7 +69,7 @@ export default function SignInForm() {
           <Button type="submit" aria-disabled={isSubmitting} className="w-full mt-4">
             {isSubmitting ? "Submitting..." : "Sign In"}
           </Button>
-        </form>
+        </fetcher.Form>
       </CardContent>
       <CardFooter className="flex-col gap-4">
         <div className="flex justify-between text-sm gap-2">
