@@ -1,9 +1,16 @@
 import { createCookieSessionStorage, redirect } from "react-router";
 
+export enum Role {
+  USER = "USER",
+  ADMIN = "ADMIN",
+  EDITOR = "EDITOR",
+}
+
 export interface SessionData {
   user: {
     id: string;
     name: string;
+    role: Role;
   };
   accessToken: string;
   refreshToken: string;

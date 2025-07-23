@@ -64,7 +64,7 @@ export async function action({ request }: Route.ActionArgs) {
     // Redireciona o usuário para o dashboard.
     if (response.ok) {
       const responseData = await response.json();
-      session.set("user", { id: responseData.id, name: responseData.name });
+      session.set("user", { id: responseData.id, name: responseData.name, role: responseData.role });
       session.set("accessToken", responseData.accessToken);
       session.set("refreshToken", responseData.refreshToken);
 

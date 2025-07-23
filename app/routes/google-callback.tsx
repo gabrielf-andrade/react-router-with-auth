@@ -1,5 +1,5 @@
 import { redirect } from "react-router";
-import { commitSession, getSession } from "~/lib/session.server";
+import { commitSession, getSession, Role } from "~/lib/session.server";
 import type { Route } from "./+types/google-callback";
 
 export async function loader({ request }: Route.LoaderArgs) {
@@ -11,13 +11,14 @@ export async function loader({ request }: Route.LoaderArgs) {
   const refreshToken = searchParams.get("refreshToken");
   const userId = searchParams.get("userId");
   const name = searchParams.get("name");
+  const role = searchParams.get("role") as Role;
 
-  if (!accessToken || !refreshToken || !userId || !name) {
-    return redirect("/login?error=authentication_failed");
+  if (!accessToken || !refreshToken || !userId || !name || !role) {
+    return redirect("/auth/signin?error=authentication_failed");
   }
 
   try {
-    session.set("user", { id: userId, name });
+    session.set("user", { id: userId, name, role });
     session.set("accessToken", accessToken);
     session.set("refreshToken", refreshToken);
 
@@ -28,7 +29,7 @@ export async function loader({ request }: Route.LoaderArgs) {
     });
   } catch (error) {
     console.error("Error creating session:", error);
-    return redirect("/login?error=session_creation_failed");
+    return redirect("/auth/signin?error=session_creation_failed");
   }
 }
 
