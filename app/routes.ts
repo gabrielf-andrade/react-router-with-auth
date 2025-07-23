@@ -17,6 +17,6 @@ export default [
       route("signout", "routes/auth/signout.tsx"),
     ]),
   ]),
-
+  route("api/auth/google/callback", "routes/google-callback.tsx"),
   route("/.well-known/appspecific/com.chrome.devtools.json", "routes/[com.chrome.devtools.json].tsx"),
 ] satisfies RouteConfig;

@@ -18,7 +18,7 @@ export async function loader({ request }: Route.LoaderArgs) {
   const error = session.get("error");
   const successMessage = session.get("success");
   return data(
-    { error, successMessage },
+    { error, successMessage, backendURL: BACKEND_URL },
     {
       headers: {
         "Set-Cookie": await commitSession(session),
@@ -101,7 +101,8 @@ export async function action({ request }: Route.ActionArgs) {
 }
 
 export default function SignInPage({ loaderData }: Route.ComponentProps) {
-  const { error, successMessage } = loaderData;
+  const { error, successMessage, backendURL } = loaderData;
+
   return (
     <div className="flex flex-col items-center justify-center w-full gap-4">
       <div className="flex flex-col items-center justify-center gap-4 w-full max-w-sm">
@@ -118,7 +119,7 @@ export default function SignInPage({ loaderData }: Route.ComponentProps) {
           </Alert>
         )}
       </div>
-      <SignInForm />
+      <SignInForm backendUrl={backendURL} />
     </div>
   );
 }

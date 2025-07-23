@@ -2,6 +2,7 @@ import { CheckCircle2, CircleAlert } from "lucide-react";
 
 import { Link, useFetcher } from "react-router";
 import type { SignInActionResponse } from "schemas/signin";
+import { GoogleIcon } from "~/components/icons/google-icon";
 import { Alert, AlertDescription } from "~/components/ui/alert";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
@@ -13,7 +14,11 @@ const initialState: SignInActionResponse = {
   message: "",
 };
 
-export default function SignInForm() {
+interface SignInFormData {
+  backendUrl: string;
+}
+
+export default function SignInForm({ backendUrl }: SignInFormData) {
   let fetcher = useFetcher();
   let state = (fetcher.data as SignInActionResponse | undefined) || initialState;
   let isSubmitting = fetcher.state !== "idle";
@@ -78,6 +83,12 @@ export default function SignInForm() {
             Sign Up
           </Link>
         </div>
+        <Button variant="outline" asChild>
+          <a href={`${backendUrl}/auth/google/login`}>
+            <GoogleIcon className="size-4" />
+            <span>Sign in with Google</span>
+          </a>
+        </Button>
       </CardFooter>
     </Card>
   );
