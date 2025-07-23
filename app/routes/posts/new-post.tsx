@@ -1,7 +1,6 @@
 import type { ActionFunctionArgs } from "react-router";
 import { data, redirect } from "react-router";
 import { secureFetch } from "~/lib/api.server";
-import { BACKEND_URL } from "~/lib/constants";
 
 interface NewPostActionResponse {
   success: boolean;
@@ -20,10 +19,8 @@ export async function action({ request }: ActionFunctionArgs) {
     content: formData.get("content") as string,
   };
 
-  const apiUrl = `${BACKEND_URL}/posts`;
-
   try {
-    const { response, headers } = await secureFetch(request, apiUrl, {
+    const { response, headers } = await secureFetch(request, "/posts", {
       method: "POST",
       body: JSON.stringify(rawData),
     });
